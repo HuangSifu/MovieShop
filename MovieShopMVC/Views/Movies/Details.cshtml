@@ -93,7 +93,7 @@
 </div>
     
     
-<div class="row pt-4">
+<div class="row mt-3">
     <div class="col-4 bg-light">
         <h5>MOVIE FACTS</h5>
         <hr>
@@ -118,36 +118,37 @@
                     @Model.Budget?.ToString("C0")
                 </span>
             </li>
-            <li class="list-group-item">
-                Return to Home Page
-            </li>
         </ul>
     </div>
 
-    <div class="col-4 offset-1">
-        <h5>CAST</h5>
 
-        <table class="table">
-            <tbody>
-                @foreach (var cast in Model?.Casts)
-                {
-                    <tr>
-                        <td>
+    <div class="col-8">
+        <h5>CAST</h5>
+        <ul class="list-group list-group-flush">
+
+            @foreach (var cast in Model.Casts)
+            {
+                <a class="text-dark" asp-controller="Casts" asp-action="Details" asp-route-id="@cast.Id">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-2">
                             <img src="@cast.ProfilePath"
                                  class="rounded-circle"
                                  style="width:30px; height: 45px;"
                                  alt="@cast.Name" />
-                        </td>
-                        <td> @cast.Name </td>
-                        <td> @cast.Character</td>
-                    </tr>
+                        </div>
+                        <div class="col-3">
+                            @cast.Name
+                        </div>
+                        <div class="col-4">
+                            @cast.Character
+                        </div>
+                    </div>
+                </li>
+                </a>
+            }
 
-                }
-
-
-            </tbody>
-        </table>
+        </ul>
 
     </div>
 </div>
-

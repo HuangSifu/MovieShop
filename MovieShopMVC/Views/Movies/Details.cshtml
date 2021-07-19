@@ -16,29 +16,30 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col offset-1">
                 <div class="row mt-2">
                     <div class="col-12">
                         <h1 class="text-white">
                             @Model.Title
                         </h1>
                         <small class="text-white"> @Model.Tagline </small>
+                        <div class="row">
+                            <div class="col-5 text-secondary font-weight-bold mt-1 ">
+                                <p>@Model.RunTime m | @Model.ReleaseDate.Value.Date.Year</p>
+                            </div>
+                            <div class="col-8">
+                                @foreach (var genre in Model.Genres)
+                                {
+                                    <a class="badge badge-pill badge-dark ml-1" asp-route-id="@genre.Id">
+                                        @genre.Name
+                                    </a>}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-5 text-secondary font-weight-bold mt-1 ">
-                    <p>@Model.RunTime m | @Model.ReleaseDate.Value.Date.Year</p>
-                </div>
-                <div class="col-8">
-                    @foreach (var genre in Model.Genres)
-                    {
-                        <a class="badge badge-pill badge-dark ml-1" asp-route-id="@genre.Id">
-                            @genre.Name
-                        </a>}
-                </div>
-            </div>
+            
 
             <div class="row">
                 <div class="col-4 mt-3">

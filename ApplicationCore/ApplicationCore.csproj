@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Remove="Entities\MovieGenre.cs" />
+    <Compile Remove="Entities\UserRole.cs" />
   </ItemGroup>
 
 </Project>

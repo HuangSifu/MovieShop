@@ -15,8 +15,9 @@ namespace ApplicationCore.Entities
 
         [MaxLength(24)]
         public string Name { get; set; }
+        public ICollection<Movie> Movies { get; set; }
 
-        public ICollection<MovieGenre> MovieGenres { get; set; }
+        //public ICollection<MovieGenre> MovieGenres { get; set; }
     }
 
     //To change entity/ table 2 options, DataAnnotations, Fluent API

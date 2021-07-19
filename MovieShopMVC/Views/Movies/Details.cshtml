@@ -1,0 +1,108 @@
+﻿@model ApplicationCore.Models.MovieDetailsResponseModel
+@{
+    ViewData["Title"] = "Detail Page";
+}
+
+<div>
+    <div class="row px-3 py-1"
+         style="
+        background-image:url( @Model.BackdropUrl);
+        background-size: cover;
+    ">
+        <div class="col-4">
+            <div class="row">
+                <div class="col-6 offset-6">
+                    <img src="@Model.PosterUrl" class="w-100" alt="@Model.Title" />
+                </div>
+            </div>
+        </div>
+        <div class="col offset-1">
+            <h1 class="text-white mt-3">@Model.Title</h1>
+            <div class="row">
+                <div class="col-7">
+                    <p class="text-secondary">@Model.Tagline</p>
+                    <div class="row">
+                        <p class="text-secondary font-weight-bold col-3">
+                            @Model.RunTime m | @Convert.ToDateTime(Model.ReleaseDate).ToString("yyyy")
+                        </p>
+                        <p class="col offset-1">
+                            @foreach (var genre in Model.Genres)
+                            {
+                            <a class="badge badge-secondary" asp-controller="genres" asp-action="details" asp-route-id="@genre.Id">
+                                @genre.Name
+                            </a>
+                            }
+                        </p>
+                    </div>
+                    <h4 class="mb-3"><span class="badge badge-warning">@Model.Rating </span></h4>
+                    <p class="text-white">@Model.Overview</p>
+                </div>
+                <div class="col offset-1 text-right">
+                    <a class="btn btn-outline-light w-75" href="#" role="button"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> REVIEW</a>
+                    <a class="btn btn-outline-light w-75 my-4" href="#" role="button">
+                        <i class="fa fa-play" aria-hidden="true"></i>
+                        TRAILER
+                    </a>
+                    <a class="btn btn-light w-75 my-2" href="#" role="button">BUY @Model.Price</a>
+                    <a class="btn btn-light w-75" href="#" role="button">WATCH MOVIE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col-4 bg-light">
+            <h5>MOVIE FACTS</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item bg-transparent pt-4">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    Rlease Date <span class="badge badge-pill badge-dark">@Convert.ToDateTime(Model.ReleaseDate).ToString("MM/dd/yyyy")</span>
+                </li>
+                <li class="list-group-item bg-transparent">
+                    <i class="fa fa-hourglass-half" aria-hidden="true"></i>
+                    Run Time <span class="badge badge-pill badge-dark">@Model.RunTime m</span>
+                </li>
+                <li class="list-group-item bg-transparent">
+                    <i class="fa fa-money" aria-hidden="true"></i>
+                    Box Office <span class="badge badge-pill badge-dark"> @String.Format("{0:C0}", Model.Revenue) </span>
+                </li>
+                <li class="list-group-item bg-transparent">
+                    <i class="fa fa-usd" aria-hidden="true"></i>
+                    Budget <span class="badge badge-pill badge-dark">
+                        @String.Format("{0:C0}", Model.Budget)
+                    </span>
+                </li>
+                <li class="list-group-item bg-transparent">
+                    <a href="@Model.ImdbUrl" class="text-dark">
+                        <i class="fa fa-imdb" aria-hidden="true"></i>
+                    </a>
+                    <a href="@Model.TmdbUrl" class="text-dark mx-3">
+                        <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-4 offset-1">
+            <h5>CAST</h5>
+            <ul class="list-group list-group-flush">
+                @foreach (var cast in Model.Casts)
+                {
+                <a class="text-dark" asp-controller="Casts" asp-action="Details" asp-route-id="@cast.Id">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-2">
+                            <img class="w-50 rounded-circle" src="@cast.ProfilePath" alt="@cast.Name" />
+                        </div>
+                        <div class="col-4">
+                            @cast.Name
+                        </div>
+                        <div class="col">
+                            @cast.Character
+                        </div>
+                    </div>
+                </li>
+                </a>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

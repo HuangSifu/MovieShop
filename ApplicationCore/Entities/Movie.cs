@@ -9,7 +9,7 @@ namespace ApplicationCore.Entities
     public class Movie
     {
         public int Id { get; set; }
-        public int Title { get; set; }
+        public string Title { get; set; }
 
         public string Overview { get; set; }
         public string Tagline { get; set; }
@@ -32,10 +32,11 @@ namespace ApplicationCore.Entities
 
         //Navigation
         public ICollection<Trailer> Trailers { get; set; }
-        public ICollection<MovieGenre> MovieGenres { get; set; }
+        //public ICollection<MovieGenre> MovieGenres { get; set; }
+        public ICollection<Genre> Genres { get; set; }
         public ICollection<MovieCast> MovieCasts { get; set; }
         public ICollection<Review> Reviews { get; set; }
-        public ICollection<MovieCrew> MovieCrew { get; set; }
+        public ICollection<MovieCrew> MovieCrews { get; set; }
         public ICollection<Favorite> Favorites { get; set; }
         public ICollection<Purchase> Purchases { get; set; }
 

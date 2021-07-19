@@ -58,7 +58,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<int>(type: "int", maxLength: 256, nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Overview = table.Column<string>(type: "nvarchar(max)", maxLength: 4096, nullable: true),
                     Tagline = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     Budget = table.Column<decimal>(type: "decimal(18,4)", nullable: true, defaultValue: 9.9m),
@@ -122,15 +122,13 @@ namespace Infrastructure.Migrations
                 name: "MovieCast",
                 columns: table => new
                 {
-                    MovieId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MovieId = table.Column<int>(type: "int", nullable: false),
                     CastId = table.Column<int>(type: "int", nullable: false),
-                    Character = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
-                    MovieId1 = table.Column<int>(type: "int", nullable: false)
+                    Character = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieCast", x => x.MovieId);
+                    table.PrimaryKey("PK_MovieCast", x => new { x.CastId, x.MovieId, x.Character });
                     table.ForeignKey(
                         name: "FK_MovieCast_Cast_CastId",
                         column: x => x.CastId,
@@ -138,8 +136,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieCast_Movie_MovieId1",
-                        column: x => x.MovieId1,
+                        name: "FK_MovieCast_Movie_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -149,16 +147,14 @@ namespace Infrastructure.Migrations
                 name: "MovieCrew",
                 columns: table => new
                 {
-                    MovieId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MovieId = table.Column<int>(type: "int", nullable: false),
                     CrewId = table.Column<int>(type: "int", nullable: false),
-                    Department = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    Job = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
-                    MovieId1 = table.Column<int>(type: "int", nullable: false)
+                    Department = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Job = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieCrew", x => x.MovieId);
+                    table.PrimaryKey("PK_MovieCrew", x => new { x.MovieId, x.CrewId, x.Department, x.Job });
                     table.ForeignKey(
                         name: "FK_MovieCrew_Crew_CrewId",
                         column: x => x.CrewId,
@@ -166,8 +162,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieCrew_Movie_MovieId1",
-                        column: x => x.MovieId1,
+                        name: "FK_MovieCrew_Movie_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -177,14 +173,12 @@ namespace Infrastructure.Migrations
                 name: "MovieGenre",
                 columns: table => new
                 {
-                    MovieId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     GenreId = table.Column<int>(type: "int", nullable: false),
-                    MovieId1 = table.Column<int>(type: "int", nullable: false)
+                    MovieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieGenre", x => x.MovieId);
+                    table.PrimaryKey("PK_MovieGenre", x => new { x.GenreId, x.MovieId });
                     table.ForeignKey(
                         name: "FK_MovieGenre_Genre_GenreId",
                         column: x => x.GenreId,
@@ -192,8 +186,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieGenre_Movie_MovieId1",
-                        column: x => x.MovieId1,
+                        name: "FK_MovieGenre_Movie_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -279,19 +273,17 @@ namespace Infrastructure.Migrations
                 name: "Review",
                 columns: table => new
                 {
-                    MovieId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MovieId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Rating = table.Column<decimal>(type: "decimal(3,2)", nullable: false, defaultValue: 9.9m),
-                    ReviewText = table.Column<string>(type: "nvarchar(2084)", maxLength: 2084, nullable: true),
-                    MovieId1 = table.Column<int>(type: "int", nullable: false)
+                    Rating = table.Column<decimal>(type: "decimal(3,2)", nullable: false),
+                    ReviewText = table.Column<string>(type: "nvarchar(2084)", maxLength: 2084, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.MovieId);
+                    table.PrimaryKey("PK_Review", x => new { x.MovieId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_Review_Movie_MovieId1",
-                        column: x => x.MovieId1,
+                        name: "FK_Review_Movie_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -307,14 +299,12 @@ namespace Infrastructure.Migrations
                 name: "UserRole",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRole", x => x.UserId);
+                    table.PrimaryKey("PK_UserRole", x => new { x.RoleId, x.UserId });
                     table.ForeignKey(
                         name: "FK_UserRole_Role_RoleId",
                         column: x => x.RoleId,
@@ -322,8 +312,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRole_User_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_UserRole_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -340,14 +330,9 @@ namespace Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieCast_CastId",
+                name: "IX_MovieCast_MovieId",
                 table: "MovieCast",
-                column: "CastId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieCast_MovieId1",
-                table: "MovieCast",
-                column: "MovieId1");
+                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieCrew_CrewId",
@@ -355,19 +340,9 @@ namespace Infrastructure.Migrations
                 column: "CrewId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieCrew_MovieId1",
-                table: "MovieCrew",
-                column: "MovieId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieGenre_GenreId",
+                name: "IX_MovieGenre_MovieId",
                 table: "MovieGenre",
-                column: "GenreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieGenre_MovieId1",
-                table: "MovieGenre",
-                column: "MovieId1");
+                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchase_MovieId",
@@ -380,11 +355,6 @@ namespace Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_MovieId1",
-                table: "Review",
-                column: "MovieId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Review_UserId",
                 table: "Review",
                 column: "UserId");
@@ -395,14 +365,9 @@ namespace Infrastructure.Migrations
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRole_RoleId",
+                name: "IX_UserRole_UserId",
                 table: "UserRole",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRole_UserId1",
-                table: "UserRole",
-                column: "UserId1");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

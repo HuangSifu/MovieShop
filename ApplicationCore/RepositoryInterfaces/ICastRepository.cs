@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.RepositoryInterfaces
 {
-    public interface IMovieRepository: IAsyncRepository<Movie>
+    public interface ICastRepository: IAsyncRepository<Cast>
     {
-        Task<List<Movie>> GetHighest30GrossingMovies();
     }
 }

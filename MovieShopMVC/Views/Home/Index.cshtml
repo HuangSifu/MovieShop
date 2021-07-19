@@ -1,12 +1,35 @@
-﻿@model List<ApplicationCore.Models.MovieCardResponseModel>
+﻿
+<!--Partial Views... shared folder, _movieCard
+    HomeController => Index action Method => List<MovieCard> home page view(Index)
+    foreach => moviecard => moviecard
 
-@{ 
+    home page view
+    purchased movies
+    purchased movies moviecard
+    favorite movies
+    movies by genre-->
+>
+
+@model IEnumerable<ApplicationCore.Models.MovieCardResponseModel>
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<h2> Top Movies Count: @ViewBag.MoviesCount  </h2>
 
-@foreach (var movie in Model)
+<div class="rounded">
+    <div class="container-fluid bg-light">
+        <div class="row">
+            @foreach (var movie in Model)
             {
+                <div class="col-6 col-lg-3 col-sm-4 col-xl-2">
 
+                    <partial name="_MovieCard" model="movie" />
+                    <!--at await Html.PartialAsync("_MovieCard",movie)
+                        use either one-->
+                </div>
             }
+        </div>
+    </div>
+</div>

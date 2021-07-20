@@ -47,5 +47,17 @@ namespace MovieShopAPI.Controllers
             return Ok(user);
         }
 
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequestModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userService.Login(model.Email, model.Password);
+                return Ok(user);
+            }
+            return BadRequest("Your entered information dosn't exist, please check again.");
+        }
     }
 }
+

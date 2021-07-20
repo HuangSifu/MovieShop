@@ -41,5 +41,17 @@ namespace Infrastructure.Repositories
 
             return movie;
         }
+
+        public async Task<IEnumerable<Movie>> GetTopRatedMovies()
+        {
+            var movies = await _dbContext.Movies.OrderByDescending(m => m.Rating).Take(30).ToListAsync();
+            return movies;
+        }
+
+        public async Task<IEnumerable<Review>> GetReviewByMovie(int movieId)
+        {
+            var reviews = await _dbContext.Set<Review>().Where(m => m.MovieId == movieId).ToListAsync();
+            return reviews;
+        }
     }
 }

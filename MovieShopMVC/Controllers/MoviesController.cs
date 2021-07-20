@@ -16,12 +16,16 @@ namespace MovieShopMVC.Controllers
             _movieService = movieService;
         }
 
+        //GET
         public async Task<IActionResult> Details(int id)
         {
             var movie = await _movieService.GetMovieDetails(id);
 
             return View(movie);
         }
-
+        public IActionResult Genre()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

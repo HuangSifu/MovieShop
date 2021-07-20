@@ -14,6 +14,7 @@ using ApplicationCore.ServiceInterfaces;
 using Infrastructure.Services;
 using ApplicationCore.RepositoryInterfaces;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MovieShopMVC
 {
@@ -36,12 +37,21 @@ namespace MovieShopMVC
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<ICastService, CastService>();
             services.AddScoped<ICastRepository, CastRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
+            services.AddHttpContextAccessor();
             //services.AddScoped<IMovieRepository, MovieRepository>();
 
             services.AddDbContext<MovieShopDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("MovieShopDbConnection"));
             });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+
+                });
             //if (controllername = "Home")
             //3rd party IOC Autofac, Ninject to use more 
             //ASP.NET Core has built in support for DI and it has built-in container
@@ -68,6 +78,8 @@ namespace MovieShopMVC
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

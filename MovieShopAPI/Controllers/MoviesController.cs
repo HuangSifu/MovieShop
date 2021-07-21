@@ -39,7 +39,7 @@ namespace MovieShopAPI.Controllers
 
         //getbygenreid API
         [HttpGet]
-        [Route("{id:int}")]
+        [Route("genre/{id:int}")]
         public async Task<IActionResult> GetMoviesByGenre(int id)
         {
             var movies = await _movieService.GetMoviesByGenreId(id);
@@ -50,7 +50,7 @@ namespace MovieShopAPI.Controllers
             return NotFound("No movies found");
         }
 
-        //GetMovieId API
+        //GetMovieDetails API
         [HttpGet]
         [Route("{id:int}")]
         public async Task<IActionResult> GetMovie(int id)
@@ -79,7 +79,7 @@ namespace MovieShopAPI.Controllers
 
         //GetTopRated API
         [HttpGet]
-        [Route("")]
+        [Route("toprated")]
         public async Task<IActionResult> GetTopRatedAsync()
         {
             var movies = await _movieService.GetTopRatedMovies();
@@ -92,7 +92,7 @@ namespace MovieShopAPI.Controllers
 
         //GetMovieReviews API
         [HttpGet]
-        [Route("{movieId:int}")]
+        [Route("{movieId:int}/reviews")]
         public async Task<IActionResult> GetReviewsByMovie(int movieId)
         {
             var reviews = await _movieService.GetReviewsByMovie(movieId);

@@ -177,6 +177,16 @@ namespace Infrastructure.Services
 
             return reviewCards;
         }
+
+        public async Task<MovieDetailsResponseModel> CreateMovie(CreateMovieRequestModel createMovieRequestModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<MovieDetailsResponseModel> UpdateMovie(CreateMovieRequestModel createMovieRequestModel)
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 

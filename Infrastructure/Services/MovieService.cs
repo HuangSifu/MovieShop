@@ -187,6 +187,11 @@ namespace Infrastructure.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<PurchaseResponseModel> GetMoviePurchases(PurchaseResponseModel purchaseResponseModel)
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 

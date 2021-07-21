@@ -38,9 +38,9 @@ namespace MovieShopAPI.Controllers
         }
         //GetPurchasesController
         [HttpGet("purchases")]
-        public async Task<IActionResult> GetPurchases([FromQuery] PurchaseRequestModel purchaseRequestModel)
+        public async Task<IActionResult> GetPurchases([FromQuery] PurchaseResponseModel purchaseResponseModel)
         {
-            var movies = await _movieService.GetMoviePurchases(purchaseRequestModel);
+            var movies = await _movieService.GetMoviePurchases(purchaseResponseModel);
             return Ok(movies);
         }
     }

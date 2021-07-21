@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Models
 {
-    public class PurchaseRequestModel
+    public class PurchaseResponseModel
     {
         public int UserId { get; set; }
         public Guid PurchaseNumber { get; set; }

@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './core/layout/header/header.component';
 import { GenresComponent } from './core/layout/genres/genres.component';
-import { MovieCardComponent } from './shared/component/movie-card/movie-card.component';
+import { MovieCardComponent } from './shared/components/movie-card/movie-card.component';
 import { CreateCastComponent } from './admin/create-cast/create-cast.component';
 import { CreateMovieComponent } from './admin/create-movie/create-movie.component';
 import { UpdateMovieComponent } from './admin/update-movie/update-movie.component';

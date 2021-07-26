@@ -21,7 +21,7 @@ namespace MovieShopAPI.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<IActionResult> GetCast(int id)    //error
+        public async Task<IActionResult> GetCast(int id)   
         {
             var cast = await _castService.GetCastDetails(id);
 

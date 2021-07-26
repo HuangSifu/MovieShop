@@ -45,8 +45,11 @@ namespace MovieShopAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICurrentUser, CurrentUser>();
-
+            services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+            services.AddScoped<IPurchaseService, PurchaseService>();
             services.AddHttpContextAccessor();
+            services.AddScoped<ICastRepository, CastRepository>();
+            services.AddScoped<ICastService, CastService>();
 
             services.AddDbContext<MovieShopDbContext>(options =>
                 options.UseSqlServer(Configuration
@@ -69,9 +72,9 @@ namespace MovieShopAPI
 
 
             }
-            app.UseCors(builder => {
-                builder.WithOrigins(Configuration.GetValue<movieShopSPAUrl>).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-            });
+            //app.UseCors(builder => {
+            //    builder.WithOrigins(Configuration.GetValue<movieShopSPAUrl>).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+            //});
 
             app.UseHttpsRedirection();
 

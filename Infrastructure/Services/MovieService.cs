@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApplicationCore.Entities;
 using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterfaces;
 using ApplicationCore.ServiceInterfaces;
@@ -178,14 +179,103 @@ namespace Infrastructure.Services
             return reviewCards;
         }
 
-        public async Task<MovieDetailsResponseModel> CreateMovie(CreateMovieRequestModel createMovieRequestModel)
+        public async Task<CreateMovieRequestModel> CreateMovie(CreateMovieRequestModel createMovieRequestModel)
         {
-            throw new NotImplementedException();
+            var movie = new Movie
+            {
+                Id = createMovieRequestModel.Id,
+                Title = createMovieRequestModel.Title,
+                PosterUrl = createMovieRequestModel.PosterUrl,
+                BackdropUrl = createMovieRequestModel.BackdropUrl,
+                Overview = createMovieRequestModel.Overview,
+                Tagline = createMovieRequestModel.Tagline,
+                Budget = createMovieRequestModel.Budget,
+                Revenue = createMovieRequestModel.Revenue,
+                ImdbUrl = createMovieRequestModel.ImdbUrl,
+                TmdbUrl = createMovieRequestModel.TmdbUrl,
+                ReleaseDate = createMovieRequestModel.ReleaseDate,
+                RunTime = createMovieRequestModel.RunTime,
+                Price = createMovieRequestModel.Price,
+                OriginalLanguage = createMovieRequestModel.OriginalLanguage,
+                //CreatedDate = createMovieRequestModel.CreatedDate,
+                //UpdatedDate = createMovieRequestModel.UpdatedDate,
+                //UpdatedBy = createMovieRequestModel.UpdatedBy,
+                //CreatedBy = createMovieRequestModel.CreatedBy
+            };
+            var create = await _movieRepository.AddAsync(movie);
+            var createmovie = new CreateMovieRequestModel
+            {
+                Id = create.Id,
+                Title = create.Title,
+                PosterUrl = create.PosterUrl,
+                BackdropUrl = create.BackdropUrl,
+                Overview = create.Overview,
+                Tagline = create.Tagline,
+                Budget = create.Budget,
+                Revenue = (decimal)create.Revenue,
+                ImdbUrl = create.ImdbUrl,
+                TmdbUrl = create.TmdbUrl,
+                ReleaseDate = (DateTime)create.ReleaseDate,
+                RunTime = (int)create.RunTime,
+                Price = (decimal)create.Price,
+                OriginalLanguage = create.OriginalLanguage,
+                //CreatedDate = create.CreatedDate,
+                //UpdatedDate = create.UpdatedDate,
+                //UpdatedBy = create.UpdatedBy,
+                //CreatedBy = create.CreatedBy
+            };
+            createmovie.Genres = createMovieRequestModel.Genres;
+            //createmovie.Casts = createMovieRequestModel.Casts;
+            return createmovie;
         }
-
-        public async Task<MovieDetailsResponseModel> UpdateMovie(CreateMovieRequestModel createMovieRequestModel)
+        public async Task<CreateMovieRequestModel> UpdateMovie(CreateMovieRequestModel createMovieRequestModel)
         {
-            throw new NotImplementedException();
+            var movie = new Movie
+            {
+                Id = createMovieRequestModel.Id,
+                Title = createMovieRequestModel.Title,
+                PosterUrl = createMovieRequestModel.PosterUrl,
+                BackdropUrl = createMovieRequestModel.BackdropUrl,
+                Overview = createMovieRequestModel.Overview,
+                Tagline = createMovieRequestModel.Tagline,
+                Budget = createMovieRequestModel.Budget,
+                Revenue = createMovieRequestModel.Revenue,
+                ImdbUrl = createMovieRequestModel.ImdbUrl,
+                TmdbUrl = createMovieRequestModel.TmdbUrl,
+                ReleaseDate = createMovieRequestModel.ReleaseDate,
+                RunTime = createMovieRequestModel.RunTime,
+                Price = createMovieRequestModel.Price,
+                OriginalLanguage = createMovieRequestModel.OriginalLanguage,
+                //CreatedDate = createMovieRequestModel.CreatedDate,
+                //UpdatedDate = createMovieRequestModel.UpdatedDate,
+                //UpdatedBy = createMovieRequestModel.UpdatedBy,
+                //CreatedBy = createMovieRequestModel.CreatedBy
+            };
+            var create = await _movieRepository.AddAsync(movie);
+            var createmovie = new CreateMovieRequestModel
+            {
+                Id = create.Id,
+                Title = create.Title,
+                PosterUrl = create.PosterUrl,
+                BackdropUrl = create.BackdropUrl,
+                Overview = create.Overview,
+                Tagline = create.Tagline,
+                Budget = create.Budget,
+                Revenue = (decimal)create.Revenue,
+                ImdbUrl = create.ImdbUrl,
+                TmdbUrl = create.TmdbUrl,
+                ReleaseDate = (DateTime)create.ReleaseDate,
+                RunTime = (int)create.RunTime,
+                Price = (decimal)create.Price,
+                OriginalLanguage = create.OriginalLanguage,
+                //CreatedDate = create.CreatedDate,
+                //UpdatedDate = create.UpdatedDate,
+                //UpdatedBy = create.UpdatedBy,
+                //CreatedBy = create.CreatedBy
+            };
+            createmovie.Genres = createMovieRequestModel.Genres;
+            //createmovie.Casts = createMovieRequestModel.Casts;
+            return createmovie;
         }
 
         public async Task<PurchaseResponseModel> GetMoviePurchases(PurchaseResponseModel purchaseResponseModel)
@@ -193,7 +283,10 @@ namespace Infrastructure.Services
             throw new NotImplementedException();
         }
     }
+
+        
     }
+    
 
 
     //public class MovieService2 : IMovieService

@@ -15,8 +15,8 @@ namespace ApplicationCore.ServiceInterfaces
         Task<List<MovieCardResponseModel>> GetMovieAsync();
         Task<List<MovieCardResponseModel>> GetTopRatedMovies();
         Task<List<ReviewResponseModel>> GetReviewsByMovie(int movieId);
-        Task<MovieDetailsResponseModel> CreateMovie(CreateMovieRequestModel createMovieRequestModel);
-        Task<MovieDetailsResponseModel> UpdateMovie(CreateMovieRequestModel createMovieRequestModel);
+        Task<CreateMovieRequestModel> CreateMovie(CreateMovieRequestModel createMovieRequestModel);
+        Task<CreateMovieRequestModel> UpdateMovie(CreateMovieRequestModel createMovieRequestModel);
         Task<PurchaseResponseModel> GetMoviePurchases(PurchaseResponseModel purchaseResponseModel);
     }
 }

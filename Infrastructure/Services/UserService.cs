@@ -22,6 +22,34 @@ namespace Infrastructure.Services
             _userRepository = userRepository;
         }
 
+        public async Task<string> CheckUserFavorite(int id, int MovieId)
+        {
+            var res = await _userRepository.CheckFavorite(id, MovieId);
+            return res;
+        }
+
+        public async Task<string> FavoriteMovie(UserFavoriteRequestModel model)
+        {
+            var res = await _userRepository.Favorite(model);
+            return res;
+        }
+
+        public async Task<List<Favorite>> GetFavorite(int id)
+        {
+            return await _userRepository.GetFavorites(id);
+        }
+
+        public async Task<List<Movie>> GetPurchase(int uid)
+        {
+            var res = await _userRepository.RepositoryGetPurchase(uid);
+            return res;
+        }
+
+        public async Task<List<ReviewModel>> getReview(int id)
+        {
+            return await _userRepository.GetReviews(id);
+        }
+
         public async Task<UserResponseModel> GetUserById(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
@@ -67,6 +95,64 @@ namespace Infrastructure.Services
             return null;
         }
 
+        public async Task<Review> ModifyReview(string text, int rating, UserLoginRequestModel model, int movieId)
+        {
+            var dbUser = await _userRepository.GetUserByEmail(model.Email);
+            if (dbUser == null)
+            {
+                throw new NotFoundException("Email does not exists, please register first");
+            }
+
+            var hashedPssword = HashPassword(model.Password, dbUser.Salt);
+
+            if (hashedPssword != dbUser.HashedPassword)
+            {
+                throw new NotFoundException("Password inccorect");
+            }
+
+            var user = await _userRepository.GetUserByEmail(model.Email);
+            var review = new Review { MovieId = movieId, Rating = rating, ReviewText = text, UserId = user.Id};
+            var res = await _userRepository.PutReview(review, user.Id);
+            return res;
+        }
+
+        public async Task<PurchaseResponseModel> PurchaseMovie(PurchaseRequestModel model)
+        {
+            //var dbUser = await _userRepository.GetUserByEmail(model.Email);
+            //if (dbUser == null)
+            //{
+            //    throw new NotFoundException("Email does not exists, please register first");
+            //}
+
+            //var hashedPssword = HashPassword(model.Password, dbUser.Salt);
+
+            //if (hashedPssword != dbUser.HashedPassword)
+            //{
+            //    throw new NotFoundException("Password inccorect");
+            //}
+            var purchase = await _userRepository.PurchaseMovie(model);
+            return new PurchaseResponseModel { PurchaseNumber = purchase.PurchaseNumber };
+        }
+
+        public async Task<Review> PutReview(Review review, UserLoginRequestModel model)
+        {
+            var dbUser = await _userRepository.GetUserByEmail(model.Email);
+            if (dbUser == null)
+            {
+                throw new NotFoundException("Email does not exists, please register first");
+            }
+
+            var hashedPssword = HashPassword(model.Password, dbUser.Salt);
+
+            if (hashedPssword != dbUser.HashedPassword)
+            {
+                throw new NotFoundException("Password inccorect");
+            }
+            var user = await _userRepository.GetUserByEmail(model.Email);
+            var res = await _userRepository.PutReview(review, user.Id);
+            return res;
+        }
+
         public async Task<UserRegisterResponseModel> RegisterUser(UserRegisterRequestModel requestModel)
         {
             // Make sure email does not exists in database User table
@@ -108,6 +194,12 @@ namespace Infrastructure.Services
             };
 
             return userResponse;
+        }
+
+        public async Task<string> UnFavoriteMovie(UserFavoriteRequestModel model)
+        {
+            var res = await _userRepository.UnFavorite(model);
+            return res;
         }
 
         private string CreateSalt()

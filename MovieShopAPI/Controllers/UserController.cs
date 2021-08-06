@@ -36,6 +36,29 @@ namespace MovieShopAPI.Controllers
             return CreatedAtRoute("GetPurchaseByUserId", model.UserId, purchase);
         }
 
+        [HttpPost]
+        [Route("favorite")]
+        public async Task<IActionResult> Favorite([FromBody] UserFavoriteRequestModel model)
+        {
+            var res = await _userService.FavoriteMovie(model);
+            return Ok(res);
+        }
+        [HttpPost]
+        [Route("unfavorite")]
+        public async Task<IActionResult> UnFavorite([FromBody] UserFavoriteRequestModel model)
+        {
+            var res = await _userService.UnFavoriteMovie(model);
+            return Ok(res);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/movie/{movieId:int}/favorite")]
+        public async Task<IActionResult> checkUserFavorite(int id, int movieId)
+        {
+            var res = await _userService.CheckUserFavorite(id, movieId);
+            return Ok(res);
+        }
+
         [HttpGet("{id}/purchases", Name = "GetPurchaseByUserId")]
         public async Task<IActionResult> GetPurchaseByUserId([FromRoute] int id)
         {
@@ -67,6 +90,37 @@ namespace MovieShopAPI.Controllers
             if (model == null) return NotFound("No Review in this User");
 
             return Ok(model);
+        }
+
+        [HttpDelete]
+        [Route("{userId:int}/movie/{movieId:int}")]
+        public async Task<IActionResult> DeleteMovie(int UserId, int MovieId)
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("{id:int}/purchases")]
+        public async Task<IActionResult> GetUserPurchase(int id)
+        {
+            var res = await _userService.GetPurchase(id);
+            return Ok(res);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/favorites")]
+        public async Task<IActionResult> GetUserFavorite(int id)
+        {
+            var res = await _userService.GetFavorite(id);
+            return Ok(res);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/reviews")]
+        public async Task<IActionResult> GetUserReview(int id)
+        {
+            var res = await _userService.getReview(id);
+            return Ok(res);
         }
     }
 }
